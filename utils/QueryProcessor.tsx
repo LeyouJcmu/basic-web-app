@@ -15,5 +15,9 @@ export default function QueryProcessor(query: string): string {
     return "AndrewID: leyouj"
   }
 
+  if (query.toLowerCase().includes("andrewid")) {
+    return "AndrewID: leyouj"
+  }
+
   return "";
 }
