@@ -56,6 +56,15 @@ export default function QueryProcessor(query: string): string {
     return "No numbers found in the query string";
   }
 
+  if (query.toLowerCase().includes("minus")) {
+    const numbers = query.match(/\d+/g);
+    if (numbers) {
+      const intNumbers = numbers.map((n: string) => parseInt(n, 10));
+      return intNumbers.reduce((a: number, b: number) => a - b, 0).toString();
+    }
+    return "No numbers found in the query string";
+  }
+
   if (query.toLowerCase().includes("primes")) {
     const numbers = query.match(/\d+/g);
     if (numbers) {
