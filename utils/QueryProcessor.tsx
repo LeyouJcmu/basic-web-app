@@ -37,6 +37,15 @@ export default function QueryProcessor(query: string): string {
     return "No numbers found in the query string";
   }
 
+  if (query.toLowerCase().includes("multiplied")) {
+    const numbers = query.match(/\d+/g);
+    if (numbers) {
+      const intNumbers = numbers.map((n: string) => parseInt(n, 10));
+      return intNumbers.reduce((a: number, b: number) => a * b, 1).toString();
+    }
+    return "No numbers found in the query string";
+  }
+
   if (query.toLowerCase().includes("both a square and a cube")) {
     const numbers = query.match(/\d+/g);
     if (numbers) {
