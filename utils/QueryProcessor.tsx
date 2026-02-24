@@ -60,7 +60,8 @@ export default function QueryProcessor(query: string): string {
     const numbers = query.match(/\d+/g);
     if (numbers) {
       const intNumbers = numbers.map((n: string) => parseInt(n, 10));
-      return intNumbers.reduce((a: number, b: number) => a - b, 0).toString();
+      const [first, ...rest] = intNumbers;
+      return rest.reduce((a: number, b: number) => a - b, first).toString();
     }
     return "No numbers found in the query string";
   }
