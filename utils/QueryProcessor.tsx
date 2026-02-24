@@ -8,6 +8,10 @@ function isPrime(n: number): boolean {
   return true;
 }
 
+function normalizedLetters(word: string): string {
+  return word.toLowerCase().replace(/\W/g, "").split("").sort().join("");
+}
+
 export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("shakespeare")) {
     return (
@@ -112,6 +116,17 @@ export default function QueryProcessor(query: string): string {
       return intNumbers.filter((n: number) => Number.isInteger(Math.sqrt(n)) && Number.isInteger(Math.cbrt(n))).toString();
     }
     return "No numbers found in the query string";
+  }
+
+  const anagramMatch = query.match(/anagram of (\w+):\s*(.+)/i);
+  if (anagramMatch) {
+    const target = anagramMatch[1].trim();
+    const targetNorm = normalizedLetters(target);
+    const candidates = anagramMatch[2].split(",").map((w: string) => w.trim().replace(/\?$/i, ""));
+    const anagrams = candidates.filter((w: string) => normalizedLetters(w) === targetNorm && w.toLowerCase() !== target.toLowerCase());
+    if (anagrams.length > 0) {
+      return anagrams.join(", ");
+    }
   }
 
   return "";
