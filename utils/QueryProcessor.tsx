@@ -38,6 +38,20 @@ export default function QueryProcessor(query: string): string {
     return "No numbers found in the query string";
   }
 
+  if (query.toLowerCase().includes("multiplied") && query.toLowerCase().includes("plus")) {
+    const lower = query.toLowerCase();
+    const terms = lower.split(" plus ");
+    let sum = 0;
+    for (const term of terms) {
+      const numbers = term.match(/\d+/g);
+      if (numbers) {
+        const intNumbers = numbers.map((n: string) => parseInt(n, 10));
+        sum += intNumbers.reduce((a: number, b: number) => a * b, 1);
+      }
+    }
+    return sum.toString();
+  }
+
   if (query.toLowerCase().includes("plus")) {
     const numbers = query.match(/\d+/g);
     if (numbers) {
