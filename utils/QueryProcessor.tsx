@@ -12,6 +12,15 @@ function normalizedLetters(word: string): string {
   return word.toLowerCase().replace(/\W/g, "").split("").sort().join("");
 }
 
+const SCRABBLE_SCORE: Record<string, number> = {
+  a: 1, b: 3, c: 3, d: 2, e: 1, f: 4, g: 2, h: 4, i: 1, j: 8, k: 5, l: 1,
+  m: 3, n: 1, o: 1, p: 3, q: 10, r: 1, s: 1, t: 1, u: 1, v: 4, w: 4, x: 8, y: 4, z: 10,
+};
+
+function scrabbleScore(word: string): number {
+  return word.toLowerCase().replace(/\W/g, "").split("").reduce((sum, c) => sum + (SCRABBLE_SCORE[c] ?? 0), 0);
+}
+
 export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("shakespeare")) {
     return (
@@ -116,6 +125,14 @@ export default function QueryProcessor(query: string): string {
       return intNumbers.filter((n: number) => Number.isInteger(Math.sqrt(n)) && Number.isInteger(Math.cbrt(n))).toString();
     }
     return "No numbers found in the query string";
+  }
+
+  const scrabbleMatch = query.match(/scrabble score of\s+(\S+)/i);
+  if (scrabbleMatch) {
+    const word = scrabbleMatch[1].replace(/\?$/i, "").trim();
+    if (word.length > 0) {
+      return scrabbleScore(word).toString();
+    }
   }
 
   const anagramMatch = query.match(/anagram of (\w+):\s*(.+)/i);
