@@ -1,3 +1,13 @@
+function isPrime(n: number): boolean {
+  if (n < 2) return false;
+  if (n === 2) return true;
+  if (n % 2 === 0) return false;
+  for (let i = 3; i * i <= n; i += 2) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}
+
 export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("shakespeare")) {
     return (
@@ -42,6 +52,15 @@ export default function QueryProcessor(query: string): string {
     if (numbers) {
       const intNumbers = numbers.map((n: string) => parseInt(n, 10));
       return intNumbers.reduce((a: number, b: number) => a * b, 1).toString();
+    }
+    return "No numbers found in the query string";
+  }
+
+  if (query.toLowerCase().includes("primes")) {
+    const numbers = query.match(/\d+/g);
+    if (numbers) {
+      const intNumbers = numbers.map((n: string) => parseInt(n, 10));
+      return intNumbers.filter((n: number) => isPrime(n)).toString();
     }
     return "No numbers found in the query string";
   }
