@@ -71,7 +71,12 @@ export default function QueryProcessor(query: string): string {
     if (numbers) {
       const intNumbers = numbers.map((n: string) => parseInt(n, 10));
       const [base, exponent] = intNumbers;
-      return Math.pow(base, exponent).toString();
+      let result = BigInt(1);
+      const b = BigInt(base);
+      for (let i = 0; i < exponent; i++) {
+        result = result * b;
+      }
+      return result.toString();
     }
     return "No numbers found in the query string";
   }
