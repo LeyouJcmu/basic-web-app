@@ -69,7 +69,8 @@ export default function QueryProcessor(query: string): string {
     const numbers = query.match(/\d+/g);
     if (numbers) {
       const intNumbers = numbers.map((n: string) => parseInt(n, 10));
-      return intNumbers.filter((n: number) => isPrime(n)).toString();
+      const primes = intNumbers.filter((n: number) => isPrime(n));
+      return primes.join(", ");
     }
     return "No numbers found in the query string";
   }
