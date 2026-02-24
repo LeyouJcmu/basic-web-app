@@ -19,7 +19,7 @@ export default function QueryProcessor(query: string): string {
     return "leyouj";
   }
 
-  if (query.toLowerCase().includes("Which of the following numbers is the largest")) {
+  if (query.toLowerCase().includes("largest")) {
     const numbers = query.match(/\d+/g);
     if (numbers) {
       const intNumbers = numbers.map((n: string) => parseInt(n, 10));
